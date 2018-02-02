@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.kostya.wifilock" >
+	<uses-feature android:name="android.hardware.wifi" />
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+	<uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+	<uses-permission android:name="android.permission.WAKE_LOCK" />
+	<uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+	<uses-permission android:name="android.permission.CONTROL_KEYGUARD" />
+	<uses-permission android:name="android.permission.QUICKBOOT_POWERON" />
+    <application
+        android:allowBackup="false"
+		android:debuggable="false"
+        android:icon="@drawable/icon_1"
+        android:label="Smart WiFi Locker"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".MainActivity"
+			android:configChanges="orientation|keyboardHidden|fontScale|locale|keyboard|navigation|uiMode"
+            android:label="Smart WiFi Locker" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+		<activity
+            android:name=".SettingsActivity"
+			android:configChanges="orientation|keyboardHidden|fontScale|locale|keyboard|navigation|uiMode"
+            android:label="Настройки" >
+        </activity>
+		<activity
+            android:name=".HelpActivity"
+			android:configChanges="orientation|keyboardHidden|fontScale|locale|keyboard|navigation|uiMode"
+            android:label="Инструкция" >
+        </activity>
+		<service android:name=".BackgroundService" android:priority="999"></service>
+		<receiver android:name=".Booter">
+			<intent-filter>
+				<action android:name="android.intent.action.BOOT_COMPLETED" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.USER_PRESENT" />
+			</intent-filter>
+			<intent-filter>
+				<action android:name="android.intent.action.QUICKBOOT_POWERON" />
+				<action android:name="com.htc.intent.action.QUICKBOOT_POWERON" />
+			</intent-filter>
+		</receiver>
+		<receiver android:name=".AdminRec"
+			android:permission="android.permission.BIND_DEVICE_ADMIN">
+			<meta-data android:name="android.app.device_admin"
+				android:resource="@xml/device_admin_config" />
+			<intent-filter>
+				<action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+			</intent-filter>
+		</receiver>
+    </application>
+
+</manifest>
