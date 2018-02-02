@@ -4,8 +4,11 @@ Google SmartLock check safe place by GPS (precision --  more 10 m). This app use
 
 Minus: app don't use Trust API.
 
+Interesting: all code has been writen in my smartphone, compiling by AIDE.
+
 # Simple Install
 See built package at app/build/bin/app.apk (please, read help page)
+For build use Android Studio
 
 # Bugs
  - If launch app at unsafe zone, go to safe zone and enter password then com.android.settings droped.
