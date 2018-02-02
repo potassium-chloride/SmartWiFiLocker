@@ -1,6 +1,5 @@
 # SmartWiFiLocker
-Smart WiFi Lock for Android that uses scan wifi networks for check device position
-Google SmartLock check safe place by GPS (precision --  more 10 m). This app uses wifi scanning (precision -- about 1 m).
+Smart WiFi Lock for Android that scans wi-fi networks to check device position. Google SmartLock checks safe place by GPS (precision — more 10 m). This app uses wi-fi scanning (precision — about 1 m).
 
 Minus: app don't use Trust API.
 
