@@ -10,7 +10,7 @@ See built package at app/build/bin/app.apk (please, read help page)
 For build use Android Studio
 
 # Bugs
- - If launch app at unsafe zone, go to safe zone and enter password then com.android.settings droped.
+ - If launch app at unsafe zone, go to safe zone and enter password then com.android.settings crashes.
  - Not all methods works on all devices
 
 Contact me: https://t.me/DolgikhKA, https://vk.me/id169221285.
