@@ -23,6 +23,8 @@ public class MainActivity extends Activity
 		if(getFilesDir().listFiles().length==0)startActivity(new Intent(MainActivity.this,HelpActivity.class));
 		MyAt at=new MyAt();
 		at.execute();
+		MonAt mat=new MonAt();
+		mat.execute();
 		
 		try{
 			KeyguardManager km=(KeyguardManager)getSystemService(KEYGUARD_SERVICE);
@@ -88,6 +90,7 @@ public class MainActivity extends Activity
 			at.execute();
 		}
 	};
+	TextView tv;
 	class MyAt extends AsyncTask<Void,Void,Void>{
 		LinearLayout ll;
 		@Override
@@ -137,12 +140,13 @@ public class MainActivity extends Activity
 			ll.setOrientation(ll.VERTICAL);
 			ll.addView(bt);
 			ll.addView(bt2);
-			TextView tv=new TextView(MainActivity.this);
-			tv.setText("Сохранённые точки:");
+			tv=new TextView(MainActivity.this);
+			tv.setText("");
 			try{
-				tv.append("\nАктивная точка: "+BackgroundService.activePoint.name);
-				tv.append("\nУверенность в ней: "+BackgroundService.activePoint.compare(BackgroundService.lastwi,BackgroundService.lastScanRes));
+				tv.append("Активная точка: "+BackgroundService.activePoint.name);
+				tv.append("\nУверенность в ней: "+BackgroundService.activePoint.compare(BackgroundService.lastwi,BackgroundService.lastScanRes)+"\n");
 			}catch(Exception e){}
+			tv.append("Сохранённые точки:");
 			ll.addView(tv);
 			ll.addView(lv);
 			return null;
@@ -153,6 +157,32 @@ public class MainActivity extends Activity
 			super.onPostExecute(result);
 			setContentView(ll);
 		}
+	}
+	class MonAt extends AsyncTask<Void,Void,Void>{
+		String txt="Сохранённые точки:";
+		@Override
+		protected void onProgressUpdate(Void[] values){
+			// TODO: Implement this method
+			try{
+				tv.setText(txt+"Сохранённые точки:");
+			}catch(Exception e){}
+			super.onProgressUpdate(values);
+		}
+		
+		@Override
+		protected Void doInBackground(Void[] p1){
+			// TODO: Implement this method
+			while(true){
+				try{
+					Thread.sleep(5000);
+					txt="Активная точка: "+BackgroundService.activePoint.name;
+					txt+="\nУверенность в ней: "+BackgroundService.activePoint.compare(BackgroundService.lastwi,BackgroundService.lastScanRes)+"\n";
+				}catch(Exception e){}
+				publishProgress();
+			}
+		}
+		
+		
 	}
 	@Override
 	protected void onDestroy(){

@@ -70,8 +70,9 @@ public class SettingsActivity extends Activity{
 					TextView var1=new TextView(SettingsActivity.this);
 					var1.setText("Администраторский 1");
 					var1.setPadding(15,15,15,15);
-					var1.setTextColor(Color.BLACK);
-					var1.setOnClickListener(new OnClickListener(){
+					if(Build.VERSION.SDK_INT>=23){
+						var1.setTextColor(Color.BLACK);
+						var1.setOnClickListener(new OnClickListener(){
 							@Override
 							public void onClick(View p1){
 								// TODO: Implement this method
@@ -80,6 +81,7 @@ public class SettingsActivity extends Activity{
 								d.cancel();
 							}
 						});
+					}
 					dll.addView(var1);
 					
 					TextView var2=new TextView(SettingsActivity.this);

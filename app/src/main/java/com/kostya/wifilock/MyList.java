@@ -66,6 +66,7 @@ public class MyList extends ListView{
 									Intent i=new Intent();
 									i.setAction(mc.getPackageName()+".UPDATE_LIST");
 									mc.sendBroadcast(i);
+									update();
 								}catch(Exception e){}
 							}
 						});
@@ -75,6 +76,24 @@ public class MyList extends ListView{
 					return false;
 				}
 			});
+	}
+	public void update(){
+		points=new ArrayList<MyPoint>();
+		setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT));
+		File[] pfiles=mc.getFilesDir().listFiles();
+		String pth;
+		for(int i=0;i<pfiles.length;i++){
+			pth=pfiles[i].getAbsolutePath();
+			try{
+				if(pth.indexOf("/point_") > 0 && pth.indexOf(".txt") > 0)points.add(new MyPoint(pth));
+			}catch(IOException e){}
+		}//*/
+		arr=new String[points.size()];
+		for(int i=0;i<points.size();i++){
+			arr[i]=points.get(i).name+(points.get(i).isSwitchOn?"":"(off)");
+		}
+		ArrayAdapter adapt=new ArrayAdapter<>(mc,android.R.layout.simple_list_item_1,arr);
+		setAdapter(adapt);
 	}
 	static public class MySeekBar extends LinearLayout{
 		boolean isSigma=false;
@@ -261,7 +280,7 @@ public class MyList extends ListView{
 							myp.save(myp.path);
 							onsave();
 						}catch (IOException e){
-							Toast.makeText(mc,"Сохранено",Toast.LENGTH_LONG).show();
+							Toast.makeText(mc,"Не сохранено :(",Toast.LENGTH_LONG).show();
 						}
 					}
 				});

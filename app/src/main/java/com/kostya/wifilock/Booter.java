@@ -10,6 +10,7 @@ public class Booter extends BroadcastReceiver{
 		AdminUtils au=new AdminUtils(p1);
 		if(!p2.getAction().equals(Intent.ACTION_USER_PRESENT)||!au.isservicestart){
 			if(au.method>1 && au.passwd.length()>0)try{
+				//au.dpm.isActivePasswordSufficient();
 				au.enableKeyguard();
 				au.dpm.lockNow();
 				Log.d("WiFiLockerRuntime","Boot completed. Enable keyguard");

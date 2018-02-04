@@ -66,7 +66,9 @@ public class MyPoint{
 			public void onReceive(Context p1, Intent p2){
 				// TODO: Implement this method
 				WifiInfo wi=wfm.getConnectionInfo();
-				if(wi!=null)if(!wi.getBSSID().equals("02:00:00:00:00:00")){
+				if(wi!=null)if(
+						!wi.getBSSID().equals("02:00:00:00:00:00") && !wi.getBSSID().equals("00:00:00:00:00:00")
+				){
 					name=wi.getSSID();
 					CBSSID=wi.getBSSID();
 					//Clevel=wi.getRssi();
@@ -74,6 +76,7 @@ public class MyPoint{
 				List<ScanResult> lsc=wfm.getScanResults();
 				if(lsc.size()<3){
 					d.cancel();
+					try{c.unregisterReceiver(br);}catch(Exception e){}
 					Toast.makeText(c,"Недостаточно сетей для создания точек",Toast.LENGTH_LONG).show();
 				}
 				for(int i=0;i<lsc.size();i++){
@@ -182,7 +185,19 @@ public class MyPoint{
 		Log.d("RuntimeWiFiLock","Compared:"+name+" -- "+res+"; home="+homeLevel+"; nohome="+nohomeLevel);
 		return res;
 	}
-	public void save(String filePath) throws IOException{
+	public void save(final String filePath) throws IOException{
+		if(!isGood){
+			if(oncl == null)oncl = new onCompleteListener(){
+					@Override
+					public void onComplite(MyPoint p){
+						// TODO: Implement this method
+						try{
+							p.save(filePath);
+						}catch (IOException e){}
+					}
+				};
+			return;
+		}
 		path=filePath;
 		FileWriter fw=new FileWriter(path);
 		fw.append("Name:"+name+"\n");

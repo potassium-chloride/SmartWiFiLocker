@@ -35,6 +35,7 @@ public class BackgroundService extends Service{
 				initArray();
 				act=Intent.ACTION_TIME_TICK;
 			}
+			if(points.size()==0)return;
 			if(act.equals(Intent.ACTION_BATTERY_LOW)){
 				batterySave=true;
 				util.enableKeyguard();
@@ -52,7 +53,7 @@ public class BackgroundService extends Service{
 			}
 			WifiInfo wi=wfm.getConnectionInfo();
 			lastwi=wi;
-			if(!isActiveNossid && (wi.getBSSID().equals("02:00:00:00:00:00")||wi.getBSSID().equals("")))return;
+			if(!isActiveNossid && (wi.getBSSID().equals("02:00:00:00:00:00")||wi.getBSSID().equals("")||wi.getBSSID().equals("00:00:00:00:00:00")))return;
 			if(act.equals(Intent.ACTION_TIME_TICK)||act.equals(WifiManager.NETWORK_STATE_CHANGED_ACTION)||act.equals(Intent.ACTION_SCREEN_OFF)){
 				long curCall=Calendar.getInstance().getTimeInMillis();
 				if(curCall-lastCall>timeout){
@@ -109,7 +110,7 @@ public class BackgroundService extends Service{
 					if(!tmpp.isSwitchOn)continue;
 					points.add(tmpp);
 					tmp=points.get(points.size()-1).CBSSID;
-					if(tmp.equals("")||tmp.equals("02:00:00:00:00:00")||tmp.equals("ff:ff:ff:ff:ff:ff"))isActiveNossid=true;
+					if(tmp.equals("")||tmp.equals("00:00:00:00:00:00")||tmp.equals("02:00:00:00:00:00")||tmp.equals("ff:ff:ff:ff:ff:ff"))isActiveNossid=true;
 				}
 			}catch(IOException e){}
 		}
